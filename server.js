@@ -7,7 +7,9 @@ const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/spiritual-dealer';
+
+// Hardcoded MongoDB connection string (MongoDB Atlas - Cloud Database)
+const MONGODB_URI = 'mongodb+srv://ali:ali@cluster0.o8bu9nt.mongodb.net/spiritual-dealer?retryWrites=true&w=majority';
 
 // CORS configuration
 const corsOptions = {
@@ -54,10 +56,13 @@ mongoose.connect(MONGODB_URI, {
 })
 .then(() => {
   console.log('✅ Connected to MongoDB');
+  console.log('📊 Database:', mongoose.connection.name);
 })
 .catch((error) => {
   console.error('❌ MongoDB connection error:', error);
+  console.error('❌ MongoDB URI:', MONGODB_URI ? 'Set (hidden)' : 'NOT SET');
   console.log('⚠️  Server will continue without database connection');
+  console.log('⚠️  Please set MONGODB_URI environment variable in Vercel');
 });
 
 // Routes
